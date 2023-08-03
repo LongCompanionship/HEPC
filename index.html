@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/index.css">
+    <title>天地车人数据驾驶舱</title>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/js.js"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <script
+        src="https://webapi.amap.com/maps?v=1.4.15&key=814537b6abcf967c6410f986c184a2dc&plugin=AMap.PolyEditor"></script>
+    <script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
+    <!-- 日期部分 -->
+    <script>
+        //顶部日期
+        function getTime() {
+            var myDate = new Date();
+            var myYear = myDate.getFullYear();  // 获取完整的年份(4位,1970-????)
+            var myMonth = myDate.getMonth() + 1;  // 获取当前月份(0-11,0代表1月)
+            var myToday = myDate.getDate();  // 获取当前日(1-31)
+            var myDay = myDate.getDay();  // 获取当前星期X(0-6,0代表星期天)
+            var week = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+            nowTime = week[myDay] + '&emsp;&emsp;' + myYear + '/' + fillZero(myMonth) + '/' + fillZero(myToday)
+            //console.log(nowTime);
+            $('#time').html(nowTime);
+        };
+        function fillZero(str) {
+            var realNum;
+            if (str < 10) {
+                realNum = '0' + str;
+            } else {
+                realNum = str;
+            }
+            return realNum;
+        }
+        //大屏
+        setInterval(getTime, 1000);
+    </script>
+    <!-- 时间部分 -->
+    <script>
+        var t = null;
+        t = setTimeout(time, 1000);//开始运行
+        function time() {
+            clearTimeout(t);//清除定时器
+            dt = new Date();
+            var h = dt.getHours();//获取时
+            var m = dt.getMinutes();//获取分
+            var s = dt.getSeconds();//获取秒
+            var t = null;
+            document.getElementById("showTime").innerHTML = Appendzero(h) + ":" + Appendzero(m) + ":" + Appendzero(s);
+            function Appendzero(obj) {
+                if (obj < 10) return "0" + "" + obj;
+                else return obj;
+            }
+            t = setTimeout(time, 1000); //设定定时器，循环运行
+        }
+    </script>
+    <style>
+        html,
+        body,
+        #container {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+
+<body>
+    <div id="container">
+        <!--  标题 -->
+        <div class="head">
+            <div class="head_title">
+                天地车人数据驾驶舱
+            </div>
+            <div class="head_time">
+                <span id="showTime"></span>
+            </div>
+            <div class="head_data">
+                <span id="time"></span>
+            </div>
+
+        </div>
+        <!-- 中间的部分 -->
+        <div class="mainbox">
+            <ul class="clearfix">
+                <li>
+                    <!-- 第一个盒子 -->
+                    <div class="panel" style="height: 90rem">
+                        <!--第一个盒子上面的标题部分-->
+                        <div class="panel_title">
+                            <div class="panel_title_png">
+                                <img src="./png/icon_mechanism .png">
+                            </div>
+                            <div class="panel_title_label">
+                                检测机构
+                            </div>
+                            <div class="panel_title_extra">
+                                更多
+                                <img src="./png/icon_down(1).png">
+                            </div>
+                        </div>
+                        <!-- 第一个盒子选项卡部分 -->
+                        <div class="panel_echarts bar">
+                            <h2>
+                                <a href="javascript:;">检测机构数</a>
+                                <a href="javacript:;"> 从业人员数</a>
+                            </h2>
+                            <div class="panel_line"></div>
+                            <div class="panel_unit">
+                                单位:检测机构/家
+                            </div>
+                            <div class="chart" style="height: 60%"></div>
+                        </div>
+                    </div>
+                    <!-- 第二个盒子 -->
+                    <div class="panel_2" style="height: 90rem">
+                        <!-- 第一个盒子选项卡部分 -->
+                        <div class="panel_echarts line">
+                            <h2>
+                                <a href="javascript:;">检测线数</a>
+                                <a href="javacript:;"> 检测设备数</a>
+                            </h2>
+                            <div class="panel_line"></div>
+                            <div class="panel_unit">
+                                单位:检测机构/家
+                            </div>
+                            <div class="chart" style="height: 85%"></div>
+                        </div>
+                    </div>
+                    <!-- 第三个盒子 -->
+                    <div class="panel_3" style="height: 105rem">
+                        <div class="panel_title">
+                            <div class="panel_title_png">
+                                <img src="./png/icon_car .png">
+                            </div>
+                            <div class="panel_title_label">
+                                车辆及OBD
+                            </div>
+                            <div class="panel_title_extra">
+                                更多
+                                <img src="./png/icon_down(1).png">
+                            </div>
+                        </div>
+                        <!-- 中下部分 -->
+                        <div class="panel_data3">
+                            <div class="panel_change">
+                                <div class="panel_change_number">
+                                    <div class="panel_nav">
+                                        <a class="active" data-type="1">车辆数据
+                                        </a>
+                                        <a data-type="2">区划数据</a>
+                                        <a data-type="3">排放阶段</a>
+                                    </div>
+                                    <div class="panel_line"></div>
+                                    <div class="panel_unit">
+                                        车辆总数
+                                    </div>
+                                    <div class="panel_mask">
+                                        <div class="panel_mask_img">
+                                            <h4>5</h4>
+                                            <h4>6</h4>
+                                            <h4>7</h4>
+                                            <h4>8</h4>
+                                        </div>
+                                    </div>
+                                    <div class="panel_unti3">
+                                        <h4>汽油</h4>
+                                        <h4>柴油</h4>
+                                        <h4>其他</h4>
+                                    </div>
+                                    <div class="use_data">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li></li>
+                <li>
+                    <!-- 第四个盒子 -->
+                    <div class="panel" style="height: 80rem">
+                        <div class="panel_title">
+                            <div class="panel_title_png">
+                                <img src="./png/icon_mechanism .png">
+                            </div>
+                            <div class="panel_title_label">
+                                遥感检测
+                            </div>
+                            <div class="panel_title_extra">
+                                更多
+                                <img src="./png/icon_down(1).png">
+                            </div>
+                        </div>
+                        <!-- 中间部分 -->
+                        <div class="panel_date4">
+                            <div class="panel_date4_left">
+                                <span>
+                                    遥感监测点数
+                                </span>
+                                <h4>20<small>/个</small></h4>
+                            </div>
+                            <div class="panel_date4_right">
+                                <div class="panel_date4_right_item">
+                                    <span>
+                                        <img src="./png/icon_fixed.png">
+                                        移动式
+                                        <h4>3<small>/个</small></h4>
+                                    </span>
+                                </div>
+                                <div class="panel_date4_right_item">
+                                    <span>
+                                        <img src="./png/icon_move.png">
+                                        固定式
+                                        <h4>4<small>/个</small></h4>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 下面部分 -->
+                        <div class="panel_data4_below">
+                            <div class="panel_data4_below_png">
+                                <img src="./png/icon_bs.png">
+                            </div>
+                            <div class="panel_data4_below_label">
+                                黑烟抓拍点数
+                            </div>
+                            <div class="panel_data4_below_number">
+                                <h4>400<small>/个</small></h4>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 第五个盒子 -->
+                    <div class="panel_5" style="height: 130rem">
+                        <div class="panel_title">
+                            <div class="panel_title_png">
+                                <img src="./png/icon_manage.png">
+                            </div>
+                            <div class="panel_title_label">
+                                抽检抽测及监督管理
+                            </div>
+                            <div class="panel_title_extra">
+                                更多
+                                <img src="./png/icon_down(1).png">
+                            </div>
+                        </div>
+                        <!-- 中间部分 -->
+                        <div class="panel_text">
+                            <div class="panel_nav">
+                                <a href="javascript:;">抽检检测机构</a>
+                            </div>
+                        </div>
+                        <div class="panel_line"></div>
+                        <div class="panel_date5_1">
+                            <div class="panel_date5_1_png">
+                                <span>
+                                    检测机构数
+                                    <h4>40<small>/个</small></h4>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="panel_date5_2">
+                            <div class="panel_date5_2_png">
+                                <span>
+                                    从业人员数
+                                    <h4>40<small>/个</small></h4>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="panel_unit" style="margin-top: -5rem;">
+                            单位:检测机构/家
+                        </div>
+                        <!-- 统计图部分 -->
+                        <div class="panel_echarts line1">
+                            <div class="chart" style="height: 45% "></div>
+                        </div>
+                    </div>
+                    <!-- 第六个盒子 -->
+                    <div class="panel_2" style="height: 80rem">
+                        <div class="panel_date6">
+                            <div class="panel_date6_png">
+                                <span>
+                                    检测设备
+                                </span>
+                            </div>
+                        </div>
+                        <div class="panel_below6">
+                            <!-- 左边部分 -->
+                            <div class="panel_below6_left">
+                                <img src="./png/img_equipments.png">
+                                <h4>检测设备总数</h4>
+                                <h5>40<small>/个</small></h5>
+                            </div>
+                            <!-- 右边部分 -->
+                            <div class="panel_below6_right">
+                                <div class="panel_below6_right_png">
+                                    <div class="panel_below_right_item">
+                                        <div class="panel_below_right_data">
+                                            <h4>38<small>/台</small></h4>
+                                            <span>
+                                                2019年检测设备数
+                                            </span>
+                                        </div>
+                                        <div class="panel_below_right_data">
+                                            <h4>269<small>/台</small></h4>
+                                            <span>
+                                                2020年检测设备数&emsp;
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="panel_below_right_item">
+                                        <div class="panel_below_right_data">
+                                            <h4>306<small>/台</small></h4>
+                                            <span>
+                                                2021年检测设备数
+                                            </span>
+                                        </div>
+                                        <div class="panel_below_right_data">
+                                            <h4>585<small>/台</small></h4>
+                                            <span>
+                                                2022年检测设备数&emsp;
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script src="./js/gaodemap.js"></script>
+    <script src="js/echarts.min.js"></script>
+    <script src="js/index.js"></script>
+    <script type="text/javascript" src="js/LeftBottomData.js"></script>
+</body>
+
+</html>
